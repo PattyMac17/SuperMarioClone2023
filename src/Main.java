@@ -87,13 +87,14 @@ public class Main extends JPanel implements KeyListener {
             world.level.velocity = -250; //once character passes the midpoint,
             // the ground should scroll with the character
             world.mario.direction = "right";
+
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE){
             //character jumps
             //if on ground, jump up
             if (world.mario.onGround()) {
-                world.mario.velocity.y = -250;
-                world.mario.acceleration.y = 198;
+                world.mario.velocity.y = -300;
+                world.mario.acceleration.y = 498;
             }
         }
     }
