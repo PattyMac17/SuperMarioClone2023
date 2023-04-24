@@ -8,7 +8,7 @@ public class Player {
     int charHeight = 50; //not final in case we make mario grow in size
     int charWidth = 20;
     Pair position,velocity;
-    Pair acceleration = new Pair(0,0);
+    Pair acceleration = new Pair(0,0); //the "gravity" pulling on the character when it jumps
     Color color;
     BufferedImage left1,left2,right1,right2;
     String direction;
@@ -26,16 +26,10 @@ public class Player {
 
     public void draw(Graphics g){
         //sets color and draws character
-        //for now, he can be a rectangle of charHeight and charWidth
-        /*Color c = g.getColor();
-
-        g.setColor(color);
-        g.fillRect((int)position.x, (int)position.y,charWidth,charHeight);
-        g.setColor(c);
-         */
 
         BufferedImage image = null;
-        switch (direction) {
+        switch (direction) {//connected to keyPressed in Main,
+            //enables character's running animation to play when he's moving
             case "right":
                 if (spriteNum == 1){
                     image = right1;
@@ -65,28 +59,28 @@ public class Player {
 
         hitWall(w);
         spriteCounter++;
-        if (spriteCounter > 10) { //the image switches after this many frames
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
+        if (onGround() && (velocity.x != 0 || w.level.velocity != 0)){
+            if (spriteCounter > 10) { //the image switches after this many frames
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0; //reset the counter
             }
-            spriteCounter = 0; //reset
         }
+
     }
     public void hitWall(World w){
-        if(position.x + 20 >= 512){
+        if(position.x + 20 >= 512 || position.x < 0){
             velocity.x = 0;//position ends up being 495.8333333417
         }
-        if(position.x < 0){
-            velocity.x = 0;
-        }
-        if (position.y > 520){ //if character hits ground after jumping, set y vel to 0
-            position.y = 520;
+        if (position.y >= 520){ //if character hits ground after jumping, set y vel to 0
+            position.y = 520; //reposition character
             velocity.y = 0;
         }
     }
-    public boolean onGround(){
+    public boolean onGround(){ //check if character is on the ground
         if(position.y == 520){
             return true;
         } else{
@@ -94,7 +88,8 @@ public class Player {
         }
     }
 
-    public void getImage(){
+    public void getImage(){ //pulls images needed for the character
+        //we did this by referring to a YouTube tutorial
 
         try{
             right1 = ImageIO.read(getClass().getResourceAsStream("bebu_right1.png"));

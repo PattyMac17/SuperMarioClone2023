@@ -58,22 +58,6 @@ public class Main extends JPanel implements KeyListener {
         char c = e.getKeyChar();
         System.out.println("You pressed down: " + c);
 
-        /*switch(c){
-            case 'w':
-                //mario jumps
-                if (world.mario.velocity.y == 0) { //to ensure no double jumping
-                    //jump
-                }
-                break;
-            case 'a':
-                //move left
-                world.mario.velocity.x = -250;
-                break;
-            case 'd':
-                //move right
-                world.mario.velocity.x = 250;
-                break;
-        }*/
         if ((e.getKeyCode() == KeyEvent.VK_A) && (world.mario.position.x >= 0)){
             //character moves left up until the left edge
             world.mario.velocity.x = -250;
@@ -87,13 +71,14 @@ public class Main extends JPanel implements KeyListener {
             world.level.velocity = -250; //once character passes the midpoint,
             // the ground should scroll with the character
             world.mario.direction = "right";
+
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE){
             //character jumps
             //if on ground, jump up
             if (world.mario.onGround()) {
-                world.mario.velocity.y = -250;
-                world.mario.acceleration.y = 198;
+                world.mario.velocity.y = -300;
+                world.mario.acceleration.y = 498;
             }
         }
     }
