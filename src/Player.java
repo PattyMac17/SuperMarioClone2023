@@ -26,16 +26,10 @@ public class Player {
 
     public void draw(Graphics g){
         //sets color and draws character
-        //for now, he can be a rectangle of charHeight and charWidth
-        /*Color c = g.getColor();
-
-        g.setColor(color);
-        g.fillRect((int)position.x, (int)position.y,charWidth,charHeight);
-        g.setColor(c);
-         */
 
         BufferedImage image = null;
-        switch (direction) {
+        switch (direction) {//connected to keyPressed in Main,
+            //enables character's running animation to play when he's moving
             case "right":
                 if (spriteNum == 1){
                     image = right1;
@@ -65,14 +59,14 @@ public class Player {
 
         hitWall(w);
         spriteCounter++;
-        if (velocity.x != 0 || w.level.velocity != 0){
+        if (onGround() && (velocity.x != 0 || w.level.velocity != 0)){
             if (spriteCounter > 10) { //the image switches after this many frames
                 if (spriteNum == 1) {
                     spriteNum = 2;
                 } else if (spriteNum == 2) {
                     spriteNum = 1;
                 }
-                spriteCounter = 0; //reset
+                spriteCounter = 0; //reset the counter
             }
         }
 
@@ -82,11 +76,11 @@ public class Player {
             velocity.x = 0;//position ends up being 495.8333333417
         }
         if (position.y >= 520){ //if character hits ground after jumping, set y vel to 0
-            position.y = 520;
+            position.y = 520; //reposition character
             velocity.y = 0;
         }
     }
-    public boolean onGround(){
+    public boolean onGround(){ //check if character is on the ground
         if(position.y == 520){
             return true;
         } else{
@@ -94,7 +88,8 @@ public class Player {
         }
     }
 
-    public void getImage(){
+    public void getImage(){ //pulls images needed for the character
+        //we did this by referring to a YouTube tutorial
 
         try{
             right1 = ImageIO.read(getClass().getResourceAsStream("bebu_right1.png"));
