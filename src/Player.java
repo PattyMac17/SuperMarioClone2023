@@ -8,7 +8,7 @@ public class Player {
     int charHeight = 50; //not final in case we make mario grow in size
     int charWidth = 20;
     Pair position,velocity;
-    Pair acceleration = new Pair(0,0);
+    Pair acceleration = new Pair(0,0); //the "gravity" pulling on the character when it jumps
     Color color;
     BufferedImage left1,left2,right1,right2;
     String direction;
@@ -65,23 +65,23 @@ public class Player {
 
         hitWall(w);
         spriteCounter++;
-        if (spriteCounter > 10) { //the image switches after this many frames
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
+        if (velocity.x != 0 || w.level.velocity != 0){
+            if (spriteCounter > 10) { //the image switches after this many frames
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0; //reset
             }
-            spriteCounter = 0; //reset
         }
+
     }
     public void hitWall(World w){
-        if(position.x + 20 >= 512){
+        if(position.x + 20 >= 512 || position.x < 0){
             velocity.x = 0;//position ends up being 495.8333333417
         }
-        if(position.x < 0){
-            velocity.x = 0;
-        }
-        if (position.y > 520){ //if character hits ground after jumping, set y vel to 0
+        if (position.y >= 520){ //if character hits ground after jumping, set y vel to 0
             position.y = 520;
             velocity.y = 0;
         }
