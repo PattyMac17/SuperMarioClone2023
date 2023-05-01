@@ -3,8 +3,9 @@ import java.awt.*;
 public class World {
     int height;
     int width;
-    Ground level;
+    Ground level,platform;
     Player mario; //can change name to mammo or something
+
 
     int gravity = 100; //changes velocity when characters jump
     public World(int initWidth, int initHeight){

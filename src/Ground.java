@@ -11,7 +11,6 @@ public class Ground {
     Pair position;
 
     public Ground(){
-        color = Color.black;
         position = new Pair(0,Main.HEIGHT-height);
     }
 
@@ -27,25 +26,10 @@ public class Ground {
         }
         g.drawImage(background, (int)position.x,0,10000,730, null);
         g.drawImage(ground, (int)position.x, (int)position.y,width,height, null);
-
-        /*
-        Color c = g.getColor();
-
-        g.setColor(color);
-        g.fillRect((int)position.x, (int)position.y,width,height);
-        //blocks to see if scrolling
-        g.setColor(Color.GRAY);
-        for (int i = 0; i < width/100; i++) {
-            g.fillRect((int)position.x+ 100*i, (int)position.y,20,height);
-        }
-        g.setColor(c);
-
-         */
     }
 
     public void update(World w, double time){
         position.x += velocity * time;
     }
-
 
 }
