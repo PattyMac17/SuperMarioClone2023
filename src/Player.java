@@ -59,6 +59,7 @@ public class Player {
         position.x +=velocity.x * time;
         position.y +=velocity.y * time; //may replace this line after implementing jumping
         velocity.y += acceleration.y * time;
+        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
 
         hitWall(w);
         spriteCounter++;

@@ -4,7 +4,7 @@ public class World {
     int height;
     int width;
     Ground level,platform;
-    Player mario; //can change name to mammo or something
+    static Player mario; //can change name to mammo or something
     Ground tube;
 
 

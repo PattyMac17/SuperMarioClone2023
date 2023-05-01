@@ -9,6 +9,7 @@ public class Ground {
     Color color;
     int velocity; //dictates how fast character seems to run on screen
     Pair position;
+    boolean collision;
 
     public Ground(){
         position = new Pair(0,Main.HEIGHT-height);

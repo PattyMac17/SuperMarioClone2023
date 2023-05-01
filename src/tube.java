@@ -6,7 +6,7 @@ class tube extends Ground {
     public tube(){
         super();
         dimension = new Pair(50,70); //can randomise height later
-        position = new Pair(700, Main.HEIGHT - Ground.height - this.dimension.y);
+        position = new Pair(200, Main.HEIGHT - Ground.height - this.dimension.y);
     }
     public void draw(Graphics g){
         g.setColor(Color.white); //remove later
@@ -14,10 +14,13 @@ class tube extends Ground {
     }
     public void update(World w, double time){
         super.update(w,time);
-
+        collisionDetection();
     }
 
     public void collisionDetection() { //detects whether player has hit an obstacle
-        Player.hitbox.intersects(tube., double y, double w, double h)
+        collision = World.mario.hitbox.intersects(this.position.x, this.position.y,this.dimension.x,this.dimension.y);
+        if (collision) {
+            World.mario.velocity.x = 0;
+        }
     }
 }
