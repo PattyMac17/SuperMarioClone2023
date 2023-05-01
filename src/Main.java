@@ -70,6 +70,7 @@ public class Main extends JPanel implements KeyListener {
         if ((e.getKeyCode() == KeyEvent.VK_D) && (world.mario.position.x + 20 >= 512)){
             world.level.velocity = -250; //once character passes the midpoint,
             // the ground should scroll with the character
+            world.tube.velocity = -250;
             world.mario.direction = "right";
 
         }
@@ -96,6 +97,7 @@ public class Main extends JPanel implements KeyListener {
                 //stop move right
                 world.mario.velocity.x = 0;
                 world.level.velocity = 0;
+                world.tube.velocity = 0;
                 break;
         }
     }

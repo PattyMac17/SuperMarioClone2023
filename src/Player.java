@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.awt.geom.*;
 
 public class Player {
 
@@ -14,12 +15,14 @@ public class Player {
     String direction;
     int spriteCounter = 0;
     int spriteNum = 1;
+    Rectangle2D hitbox;
 
 
     public Player(){
         color = Color.white;
         position = new Pair(50, 520);
         velocity = new Pair(0,0);
+        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
         getImage();
         direction = "right";
     }
@@ -87,6 +90,8 @@ public class Player {
             return false;
         }
     }
+
+
 
     public void getImage(){ //pulls images needed for the character
         //we did this by referring to a YouTube tutorial
