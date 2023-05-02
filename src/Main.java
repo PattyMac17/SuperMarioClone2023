@@ -7,6 +7,7 @@ public class Main extends JPanel implements KeyListener {
     public static final int HEIGHT = 650;
     public static final int FPS = 60;
     World world;
+    boolean gameStarted;
 
     public Main(){ //this is the constructor
         world = new World(WIDTH, HEIGHT);
@@ -27,13 +28,11 @@ public class Main extends JPanel implements KeyListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        g.setColor(Color.blue);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-        g.setColor(Color.gray);
-        g.fillRect(512, 0, 5, 768);
-
-        world.drawObjects(g);
+        world.level.drawMenu(g);
+        g.drawString("Press enter to start", 450,400);
+        if (gameStarted){
+            world.drawObjects(g);
+        }
     }
 
     class Runner implements Runnable {
@@ -58,29 +57,33 @@ public class Main extends JPanel implements KeyListener {
         char c = e.getKeyChar();
         System.out.println("You pressed down: " + c);
 
-        if ((e.getKeyCode() == KeyEvent.VK_A) && (world.mario.position.x >= 0)){
+        if ((e.getKeyCode() == KeyEvent.VK_A) && (world.mario.position.x >= 0) && gameStarted){
             //character moves left up until the left edge
             world.mario.velocity.x = -250;
             world.mario.direction = "left";
         }
-        if ((e.getKeyCode() == KeyEvent.VK_D) && !(world.mario.position.x + 20 >= 512)){
+        if ((e.getKeyCode() == KeyEvent.VK_D) && !(world.mario.position.x + 20 >= 512) && gameStarted){
             world.mario.velocity.x = 250;//the character can move right until the middle of the screen
             world.mario.direction = "right";
         }
-        if ((e.getKeyCode() == KeyEvent.VK_D) && (world.mario.position.x + 20 >= 512)){
+        if ((e.getKeyCode() == KeyEvent.VK_D) && (world.mario.position.x + 20 >= 512) && gameStarted){
             world.level.velocity = -250; //once character passes the midpoint,
             // the ground should scroll with the character
             world.tube.velocity = -250;
             world.mario.direction = "right";
+            //ground stops scrolling when character reaches end of level
 
         }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE){
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && gameStarted){
             //character jumps
             //if on ground, jump up
             if (world.mario.onGround()) {
                 world.mario.velocity.y = -300;
                 world.mario.acceleration.y = 498;
             }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ENTER){
+            gameStarted = true;
         }
     }
 
