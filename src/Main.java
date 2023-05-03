@@ -29,7 +29,8 @@ public class Main extends JPanel implements KeyListener {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         Thread mainThread = new Thread(new Runner());
         mainThread.start();
-        
+
+        /*
         //should display timer in the center of the screen
         counterLabel = new JLabel("");
         counterLabel.setBounds(300, 230, 200, 100);
@@ -43,6 +44,8 @@ public class Main extends JPanel implements KeyListener {
         second = 400; //sets timer to 400
         countdownTimer();
         timer.start(); //starts timer
+
+         */
     }
 
     public static void main(String[] args){
@@ -77,7 +80,8 @@ public class Main extends JPanel implements KeyListener {
 
         }
     }
-    
+
+    /*
     public void countdownTimer(){ //method for game timer
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e){
@@ -90,6 +94,8 @@ public class Main extends JPanel implements KeyListener {
             }
         });
     }
+
+     */
     
     public void keyTyped(KeyEvent e) {
         char c = e.getKeyChar();
@@ -112,8 +118,9 @@ public class Main extends JPanel implements KeyListener {
             world.level.velocity = -250; //once character passes the midpoint,
             // the ground should scroll with the character
             world.tube.velocity = -250;
+            world.eph.velocity.x = -50 - 250; //-50 is the eph's initial speed
             world.mario.direction = "right";
-            //ground stops scrolling when character reaches end of level
+            //ground stops scrolling when character reaches end of level:
 
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE && gameStarted){
@@ -143,6 +150,7 @@ public class Main extends JPanel implements KeyListener {
                 world.mario.velocity.x = 0;
                 world.level.velocity = 0;
                 world.tube.velocity = 0;
+                world.eph.velocity.x = -50; //eph's default speed
                 break;
         }
     }

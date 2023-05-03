@@ -19,8 +19,7 @@ public class Player {
 
 
     public Player(){
-        color = Color.white;
-        position = new Pair(50, 520);
+        position = new Pair(50, 490);
         velocity = new Pair(0,0);
         hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
         getImage();
@@ -50,7 +49,7 @@ public class Player {
                 }
                 break;
         }
-        g.drawImage(image,(int)position.x,(int)position.y, charWidth*2, charWidth*2,null);
+        g.drawImage(image,(int)position.x,(int)position.y, charWidth*4, charWidth*4,null);
 
     }
 
@@ -59,7 +58,7 @@ public class Player {
         position.x +=velocity.x * time;
         position.y +=velocity.y * time; //may replace this line after implementing jumping
         velocity.y += acceleration.y * time;
-        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
+        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charWidth);
 
         hitWall(w);
         spriteCounter++;
@@ -79,13 +78,13 @@ public class Player {
         if(position.x + 20 >= 512 || position.x < 0){
             velocity.x = 0;//position ends up being 495.8333333417
         }
-        if (position.y >= 520){ //if character hits ground after jumping, set y vel to 0
-            position.y = 520; //reposition character
+        if (position.y >= 490){ //if character hits ground after jumping, set y vel to 0
+            position.y = 490; //reposition character
             velocity.y = 0;
         }
     }
     public boolean onGround(){ //check if character is on the ground
-        if(position.y == 520){
+        if(position.y == 490){
             return true;
         } else{
             return false;

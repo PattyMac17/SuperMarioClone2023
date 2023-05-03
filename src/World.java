@@ -6,6 +6,8 @@ public class World {
     Ground level,platform;
     static Player mario; //can change name to mammo or something
     Ground tube;
+    Eph eph; //will replace this with DS later
+    //DS<Eph> ephs;
 
 
     int gravity = 100; //changes velocity when characters jump
@@ -15,6 +17,8 @@ public class World {
         level = new Ground();
         mario = new Player();
         tube = new tube();
+        eph = new Eph();
+        //ephs = new DS<Eph>();
     }
 
     public void drawObjects(Graphics g){
@@ -22,6 +26,7 @@ public class World {
         level.draw(g);
         mario.draw(g);
         tube.draw(g);
+        eph.draw(g);
     }
 
     public void updateObjects(double time){
@@ -29,5 +34,6 @@ public class World {
         mario.update(this,time);
         level.update(this, time);
         tube.update(this,time);
+        eph.update(this,time);
     }
 }
