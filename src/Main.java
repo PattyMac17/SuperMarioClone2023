@@ -37,6 +37,7 @@ public class Main extends JPanel implements KeyListener {
         counterLabel.setHorizontalAlignment(JLabel.CENTER);
         counterLabel.setFont(font);
 
+        window = new JFrame();
         window.add(counterLabel);
         window.setVisible(true);
         
