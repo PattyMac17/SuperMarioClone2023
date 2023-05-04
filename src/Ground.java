@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class Ground {
     final static int height = 100; //300 is a random placeholder for how tall the ground is
-    final static int width = 8000; //*10 b/c ground should be much longer than width of screen
+    final int width = 8000; //*10 b/c ground should be much longer than width of screen
     int velocity; //dictates how fast character seems to run on screen
     Pair position;
     boolean collision;

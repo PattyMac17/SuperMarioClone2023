@@ -111,6 +111,7 @@ public class Main extends JPanel implements KeyListener {
             world.mario.velocity.x = -250;
             world.mario.direction = "left";
         }
+        // PROBLEM HERE
         if ((e.getKeyCode() == KeyEvent.VK_D) && !(world.mario.position.x + 20 >= 512) && gameStarted){
             world.mario.velocity.x = 250;//the character can move right until the middle of the screen
             world.mario.direction = "right";
@@ -118,7 +119,9 @@ public class Main extends JPanel implements KeyListener {
         if ((e.getKeyCode() == KeyEvent.VK_D) && (world.mario.position.x + 20 >= 512) && gameStarted){
             world.level.velocity = -250; //once character passes the midpoint,
             // the ground should scroll with the character
-            world.tube.velocity = -250;
+            for (tube tube: world.tubes){
+                tube.velocity = -250;
+            }
             world.eph.velocity.x = -50 - 250; //-50 is the eph's initial speed
             world.mario.direction = "right";
             //ground stops scrolling when character reaches end of level:
@@ -150,7 +153,9 @@ public class Main extends JPanel implements KeyListener {
                 //stop move right
                 world.mario.velocity.x = 0;
                 world.level.velocity = 0;
-                world.tube.velocity = 0;
+                for (tube tube: world.tubes){
+                    tube.velocity = 0;
+                }
                 world.eph.velocity.x = -50; //eph's default speed
                 break;
         }

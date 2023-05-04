@@ -5,12 +5,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Eph extends Player{
+    int charWidth = 40;
+    int stepsCounter = 0; //this will be randomised to determine after how many frames does the eph change direction
     public Eph(){
         position = new Pair(850, 520);
         velocity = new Pair(-50,0);
-        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
         getImage();
         direction = "left";
+
     }
     public void draw(Graphics g){
         //draws character
@@ -35,7 +37,7 @@ public class Eph extends Player{
                 }
                 break;
         }
-        g.drawImage(image,(int)position.x,(int)position.y, charWidth*2, charWidth*2,null);
+        g.drawImage(image,(int)position.x,(int)position.y, charWidth, charWidth,null);
 
     }
 
@@ -44,7 +46,6 @@ public class Eph extends Player{
         position.x += velocity.x * time;
         position.y += velocity.y * time;
         velocity.y += acceleration.y * time;
-        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
 
         spriteCounter++;
         if (velocity.x != 0 || w.level.velocity != 0){
@@ -57,6 +58,12 @@ public class Eph extends Player{
                 spriteCounter = 0; //reset the counter
             }
         }
+        /*
+        stepsCounter ++; //this is for making the cow turn
+        int turn = //random number between 3 and 10 seconds (*60 frams/sec)
+        if ()
+
+         */
     }
 
     public void getImage(){ //pulls images needed for the character

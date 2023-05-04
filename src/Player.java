@@ -7,7 +7,7 @@ import java.awt.geom.*;
 public class Player {
 
     int charHeight = 50; //not final in case we make mario grow in size
-    int charWidth = 20;
+    int charWidth = 66;
     Pair position,velocity;
     Pair acceleration = new Pair(0,0); //the "gravity" pulling on the character when it jumps
     Color color;
@@ -15,17 +15,32 @@ public class Player {
     String direction;
     int spriteCounter = 0;
     int spriteNum = 1;
-    Rectangle2D hitbox;
+    Rectangle hitbox;
 
 
     public Player(){
-        position = new Pair(50, 490);
+        position = new Pair(50, 500);
         velocity = new Pair(0,0);
-        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charHeight);
         getImage();
         direction = "right";
+        initHitbox();
     }
 
+    public void initHitbox(){
+        hitbox = new Rectangle((int)position.x,(int)position.y,charWidth,charWidth);
+    }
+    public Rectangle getHitbox(){
+        return hitbox;
+    }
+    public void updateHitbox(){
+        hitbox.x = (int)position.x;
+        hitbox.y = (int)position.y;
+    }
+
+    public void drawHitbox(Graphics g){ //for debugging
+        g.setColor(Color.red);
+        g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+    }
     public void draw(Graphics g){
         //sets color and draws character
 
@@ -49,7 +64,7 @@ public class Player {
                 }
                 break;
         }
-        g.drawImage(image,(int)position.x,(int)position.y, charWidth*4, charWidth*4,null);
+        g.drawImage(image,(int)position.x,(int)position.y, charWidth, charWidth,null);
 
     }
 
@@ -58,8 +73,7 @@ public class Player {
         position.x +=velocity.x * time;
         position.y +=velocity.y * time; //may replace this line after implementing jumping
         velocity.y += acceleration.y * time;
-        hitbox = new Rectangle2D.Double(position.x, position.y, charWidth, charWidth);
-
+        updateHitbox();
         hitWall(w);
         spriteCounter++;
         if (onGround() && (velocity.x != 0 || w.level.velocity != 0)){
@@ -72,19 +86,44 @@ public class Player {
                 spriteCounter = 0; //reset the counter
             }
         }
+        //horizontal collision
+        for (tube tube: World.tubes){
+            if (hitbox.intersects(tube.hitbox)) {
+                hitbox.x -= velocity.x;
+                while (!tube.hitbox.intersects(hitbox)) {
+                    hitbox.x += Math.signum(velocity.x);
+                }
+                hitbox.x -= Math.signum(velocity.x);
+                velocity.x = 0;
+                position.x = hitbox.x;
+            }
+        }
+        //vertical collision
+        for (tube tube: World.tubes){
+            if (hitbox.intersects(tube.hitbox)) {
+                hitbox.y -= velocity.y;
+                while (!tube.hitbox.intersects(hitbox)) {
+                    hitbox.y += Math.signum(velocity.y);
+                }
+                hitbox.y -= Math.signum(velocity.y);
+                velocity.y = 0;
+                position.y = hitbox.y;
+            }
+        }
+        System.out.println(position.x);
 
     }
     public void hitWall(World w){
         if(position.x + 20 >= 512 || position.x < 0){
             velocity.x = 0;//position ends up being 495.8333333417
         }
-        if (position.y >= 490){ //if character hits ground after jumping, set y vel to 0
-            position.y = 490; //reposition character
+        if (position.y >= 500){ //if character hits ground after jumping, set y vel to 0
+            position.y = 500; //reposition character
             velocity.y = 0;
         }
     }
     public boolean onGround(){ //check if character is on the ground
-        if(position.y == 490){
+        if(position.y == 500){
             return true;
         } else{
             return false;
