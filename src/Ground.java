@@ -8,10 +8,11 @@ public class Ground {
     final int width = 8000; //*10 b/c ground should be much longer than width of screen
     int velocity; //dictates how fast character seems to run on screen
     Pair position;
-    boolean collision;
+    Rectangle hitbox;
 
     public Ground(){
         position = new Pair(0,Main.HEIGHT-height);
+        initHitbox();
     }
 
     public void drawMenu(Graphics g){
@@ -25,6 +26,15 @@ public class Ground {
         }
         g.drawImage(menu, (int)position.x,0,Main.WIDTH,Main.HEIGHT, null);
         g.drawImage(title, 100,100, null);
+    }
+
+    public void initHitbox(){
+        hitbox = new Rectangle((int)position.x,(int)position.y,width,height);
+    }
+
+    public void drawHitbox(Graphics g){ //for debugging
+        g.setColor(Color.red);
+        g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
     public void draw(Graphics g){

@@ -58,6 +58,22 @@ public class Eph extends Player{
                 spriteCounter = 0; //reset the counter
             }
         }
+
+        for (tube tube: World.tubes){
+            if (hitbox.intersects(tube.hitbox)) {
+                hitbox.x -= velocity.x;
+                while (!tube.hitbox.intersects(hitbox)) {
+                    hitbox.x += Math.signum(velocity.x);
+                }
+                hitbox.x -= Math.signum(velocity.x);
+                velocity.flipX();
+                if (direction == "left"){
+                    direction = "right";
+                }
+                position.x = hitbox.x;
+            }
+        }
+
         /*
         stepsCounter ++; //this is for making the cow turn
         int turn = //random number between 3 and 10 seconds (*60 frams/sec)

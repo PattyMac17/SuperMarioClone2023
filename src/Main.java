@@ -25,12 +25,13 @@ public class Main extends JPanel implements KeyListener {
 
     public Main(){ //this is the constructor
         world = new World(WIDTH, HEIGHT);
+        countdownTimer();
         addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         Thread mainThread = new Thread(new Runner());
         mainThread.start();
 
-        /*
+
         //should display timer in the center of the screen
         counterLabel = new JLabel("");
         counterLabel.setBounds(300, 230, 200, 100);
@@ -40,13 +41,13 @@ public class Main extends JPanel implements KeyListener {
         window = new JFrame();
         window.add(counterLabel);
         window.setVisible(true);
-        
+
         counterLabel.setText("400");
         second = 400; //sets timer to 400
         countdownTimer();
         timer.start(); //starts timer
 
-         */
+
     }
 
     public static void main(String[] args){
@@ -67,6 +68,19 @@ public class Main extends JPanel implements KeyListener {
         }
     }
 
+    public void countdownTimer(){ //method for game timer
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                second--; //timer counts down
+                //timerSecond = dFormat.format(second);
+                counterLabel.setText("Hi");
+                if(second == 0){ //stops once timer reaches 0
+                    timer.stop();
+                }
+            }
+        });
+    }
+
     class Runner implements Runnable {
         public void run() {
             while (true) {
@@ -82,21 +96,10 @@ public class Main extends JPanel implements KeyListener {
         }
     }
 
-    /*
-    public void countdownTimer(){ //method for game timer
-        timer = new Timer(1000, new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                second--; //timer counts down
-                //timerSecond = dFormat.format(second);
-                //counterLabel.setText(timerSecond);
-                if(second == 0){ //stops once timer reaches 0
-                    timer.stop();
-                }
-            }
-        });
-    }
 
-     */
+
+
+
     
     public void keyTyped(KeyEvent e) {
         char c = e.getKeyChar();

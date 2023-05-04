@@ -87,15 +87,16 @@ public class Player {
             }
         }
         //horizontal collision
-        for (tube tube: World.tubes){
-            if (hitbox.intersects(tube.hitbox)) {
-                hitbox.x -= velocity.x;
-                while (!tube.hitbox.intersects(hitbox)) {
-                    hitbox.x += Math.signum(velocity.x);
-                }
-                hitbox.x -= Math.signum(velocity.x);
-                velocity.x = 0;
-                position.x = hitbox.x;
+        for (tube tube: World.tubes) {
+            if (hitbox.intersects(tube.hitbox)) {//finished, used when the world is not scrolling
+                    hitbox.x -= velocity.x;
+                    while (!tube.hitbox.intersects(hitbox)) {
+                        hitbox.x += Math.signum(velocity.x);
+                    }
+                    hitbox.x -= Math.signum(velocity.x);
+                    velocity.x = 0;
+
+                    position.x = hitbox.x;
             }
         }
         //vertical collision
@@ -111,6 +112,7 @@ public class Player {
             }
         }
         System.out.println(position.x);
+
 
     }
     public void hitWall(World w){

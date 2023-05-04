@@ -1,16 +1,18 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+import javax.swing.Timer;
 public class World {
     int height;
     int width;
-    Ground level,platform;
+    static Ground level;
+    Ground platform;
     static Player mario; //can change name to mammo or something
     Eph eph; //will replace this with DS later
     //DS<Eph> ephs;
     static ArrayList<tube> tubes = new ArrayList<>();
-
-
+    Timer timer;
     int gravity = 100; //changes velocity when characters jump
     public World(int initWidth, int initHeight){
         width = initWidth;
@@ -31,6 +33,7 @@ public class World {
     public void drawObjects(Graphics g){
         //insert draw methods of various objects here
         level.draw(g);
+        level.drawHitbox(g); //remove later once debugged
         mario.draw(g);
         mario.drawHitbox(g);  //remove later once debugged
         eph.draw(g);
